@@ -41,7 +41,30 @@ namespace URLShortener.Data
         public string GetTargetUrl(string shortenedPath)
         {
             var result = ShortenedUrls.FirstOrDefault(u => u.ShortenedPath == shortenedPath);
-            return result == null ? null : result.TargetUrl;
+            if (result == null)
+                return null;
+
+            var today = GetToday();
+            var urlUseCount = UrlUseCounts.FirstOrDefault(c => c.ShortenedUrlId == result.Id && c.Date == today);
+            if (urlUseCount == null)
+                UrlUseCounts.Add(new UrlUseCount {ShortenedUrlId = result.Id, Date = today, Count = 1});
+            else
+                urlUseCount.Count++;
+
+            result.LastUseTime = GetNowTime();
+            this.SaveChanges();
+
+            return result.TargetUrl;
+        }
+
+        protected DateTime GetToday()
+        {
+            return DateTime.Now.Date;
+        }
+
+        protected DateTime GetNowTime()
+        {
+            return DateTime.Now;
         }
     }
 }

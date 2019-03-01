@@ -40,7 +40,10 @@ namespace URLShortener.Controllers
 
         public void GoToUrl(string hash)
         {
-            string targetUrl = _context.GetTargetUrl(hash);
+            var targetUrl = _context.GetTargetUrl(hash);
+            if (targetUrl == null)
+                targetUrl = "/";
+
             Response.Redirect(targetUrl);
         }
 
