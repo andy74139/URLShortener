@@ -1,22 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using URLShortener.Data;
 using URLShortener.Models;
+using URLShortener.Services;
 
 namespace URLShortener.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ShortenedUrlContext _context;
+        private RandomShrotenedUrlGeneratorService _randomGeneratorService;
 
         public HomeController(ShortenedUrlContext context)
         {
             _context = context;
+            _randomGeneratorService = new RandomShrotenedUrlGeneratorService();
         }
 
         public async Task<IActionResult> Index()
@@ -25,9 +24,18 @@ namespace URLShortener.Controllers
             return View(model);
         }
 
-        public IActionResult CreateShortenedUrl(string url)
+        [HttpPost]
+        public void CreateShortenedUrl(string targetUrl)
         {
-            return View();
+            bool isCreationSuccess;
+            do
+            {
+                string shortenedPath = _randomGeneratorService.GetRandomShortenedPath(4);
+                isCreationSuccess = _context.CreateShortenedUrl(shortenedPath, targetUrl);
+            } while (!isCreationSuccess);
+
+            Response.Redirect("/");
+
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -26,5 +26,17 @@ namespace URLShortener.Data
         {
             return await ShortenedUrls.OrderByDescending(url => url.LastUseTime).Take(10).ToListAsync();
         }
+
+        public bool CreateShortenedUrl(string shortenedPath, string targetUrl)
+        {
+            if (ShortenedUrls.Any(u => u.ShortenedPath == shortenedPath))
+                return false;
+
+            ShortenedUrls.Add(new ShortenedUrl() { ShortenedPath = shortenedPath, TargetUrl = targetUrl });
+            this.SaveChanges();
+            return true;
+        }
+
+
     }
 }
