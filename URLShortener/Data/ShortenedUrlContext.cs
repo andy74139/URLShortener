@@ -21,5 +21,10 @@ namespace URLShortener.Data
             modelBuilder.Entity<ShortenedUrl>().ToTable("ShortenedUrl");
             modelBuilder.Entity<UrlUseCount>().ToTable("UrlUseCount");
         }
+
+        public async Task<IEnumerable<ShortenedUrl>> GetRecentShortenedUrls()
+        {
+            return await ShortenedUrls.OrderByDescending(url => url.LastUseTime).Take(10).ToListAsync();
+        }
     }
 }

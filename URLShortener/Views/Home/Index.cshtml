@@ -20,9 +20,9 @@
     @foreach (var shortenedUrl in Model)
     {
         <tr>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>@shortenedUrl.ShortenedPath</td>
+            <td><a href="@shortenedUrl.TargetUrl">@shortenedUrl.TargetUrl</a></td>
+            <td>@shortenedUrl.LastUseTime</td>
             <td><img src="~/images/2000px-Icon_Stats_active.svg.png" width="25px" /></td>
         </tr>
     }

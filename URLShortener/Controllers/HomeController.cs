@@ -4,15 +4,25 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using URLShortener.Data;
 using URLShortener.Models;
 
 namespace URLShortener.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly ShortenedUrlContext _context;
+
+        public HomeController(ShortenedUrlContext context)
         {
-            return View(new ShortenedUrl[]{});
+            _context = context;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var model = await _context.GetRecentShortenedUrls();
+            return View(model);
         }
 
         public IActionResult CreateShortenedUrl(string url)

@@ -23,7 +23,9 @@ namespace URLShortener.Data
 
             var shortenedUrls = new ShortenedUrl[]
             {
-                new ShortenedUrl {ShortenedPath = "Test", TargetUrl = "http://www.google.com"},
+                new ShortenedUrl {ShortenedPath = "Tes1", TargetUrl = "http://www.google.com", LastUseTime = new DateTime(2019, 3, 1, 1, 2, 3)},
+                new ShortenedUrl {ShortenedPath = "Tes2", TargetUrl = "http://www.apple.com", LastUseTime = new DateTime(2019, 2, 28, 9, 30, 0)},
+                new ShortenedUrl {ShortenedPath = "Tes3", TargetUrl = "http://www.youtube.com", LastUseTime = new DateTime(2019, 2, 28, 19, 31, 12)},
             };
 
             foreach (var shortenedUrl in shortenedUrls)
