@@ -38,6 +38,12 @@ namespace URLShortener.Controllers
 
         }
 
+        public void GoToUrl(string hash)
+        {
+            string targetUrl = _context.GetTargetUrl(hash);
+            Response.Redirect(targetUrl);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

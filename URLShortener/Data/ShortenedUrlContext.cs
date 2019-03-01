@@ -38,5 +38,10 @@ namespace URLShortener.Data
         }
 
 
+        public string GetTargetUrl(string shortenedPath)
+        {
+            var result = ShortenedUrls.FirstOrDefault(u => u.ShortenedPath == shortenedPath);
+            return result == null ? null : result.TargetUrl;
+        }
     }
 }

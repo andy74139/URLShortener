@@ -20,7 +20,7 @@
     @foreach (var shortenedUrl in Model)
     {
         <tr>
-            <td>@shortenedUrl.ShortenedPath</td>
+            <td><a href="/Home/GoToUrl?hash=@shortenedUrl.ShortenedPath" target="_blank">@shortenedUrl.ShortenedPath</a></td>
             <td><a href="@shortenedUrl.TargetUrl" target="_blank">@shortenedUrl.TargetUrl</a></td>
             <td>@(shortenedUrl.LastUseTime == default(DateTime) ? string.Empty : shortenedUrl.LastUseTime.ToString())</td>
             <td><img src="~/images/2000px-Icon_Stats_active.svg.png" width="25px" /></td>
